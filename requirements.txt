@@ -1,0 +1,5 @@
+requests==2.23.0
+requests-mock==1.8.0
+websockets==8.1
+mysql-connector==2.2.9
+mysql-connector-python==8.0.20

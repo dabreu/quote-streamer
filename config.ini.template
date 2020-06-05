@@ -1,0 +1,32 @@
+[MT_CLIENT]
+token_service_url=https://api.tdameritrade.com/v1/oauth2/token
+user_principals_service_url=https://api.tdameritrade.com/v1/userprincipals
+consumer_key=<the consumer key of your ameritrade api app>
+callback_url=<the callback url of your ameritrade api app>
+token_data_file=./amtclient/data/token.json
+code=<code retrieved after login to ameritrade api>
+
+[SERVICE_QUOTE]
+keys = AAPL,MSFT,QQQ,GOOG,GGAL,SPY,EUR/USD
+fields = {"1": "bid_price", "2": "ask_price", "3": "last_price", "4": "bid_size",
+    "5": "ask_size", "6": "ask_id", "7": "bid_id", "8": "total_volume", "9": "last_size",
+    "10": "trade_time", "11": "quote_time", "26": "last_id", "37": "nav"}
+
+[MODEL]
+
+[REPOSITORY]
+#type is database or file_system
+type=database
+
+[DATABASE]
+host=localhost
+port=3306
+name=trade
+user=some_db_user
+password=some_db_pass
+field_mappings = {"QUOTE": {"key": "symbol"}}
+model_fields = { "QUOTE" : "symbol,bid_price,ask_price,last_price,bid_size,ask_size,ask_id,bid_id,total_volume,last_size,trade_time,quote_time,last_id,nav" }
+
+[FILE_SYSTEM]
+directory=
+file=
