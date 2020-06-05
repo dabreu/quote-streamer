@@ -3,7 +3,7 @@ CREATE DATABASE trade;
 DROP USER tradeuser@localhost;
 FLUSH PRIVILEGES;
 
-CREATE USER tradeuser@localhost IDENTIFIED BY 'tradeuser.1';
+CREATE USER tradeuser@localhost IDENTIFIED BY '<set password>';
 
 GRANT ALL ON trade.* to 'tradeuser'@'localhost';
 
