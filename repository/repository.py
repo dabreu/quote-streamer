@@ -42,8 +42,8 @@ class DBRepository(AbstractRepository):
         fields = ",".join(fields_values[0])
         placeholders = ",".join(['%s'] * len(fields_values[0]))
         values = fields_values[1]
-        return f'INSERT INTO {entity.model.name} ({fields},created_on) VALUES ({placeholders},CURRENT_TIMESTAMP())', \
-               values
+        return f'INSERT INTO {entity.model.name} ({fields},created_on) ' \
+               f'VALUES ({placeholders},CURRENT_TIMESTAMP())', values
 
     def add(self, entity):
         try:
@@ -52,7 +52,7 @@ class DBRepository(AbstractRepository):
             cursor = connection.cursor()
             cursor.execute(insert_stm, args)
             connection.commit()
-        except Exception as e:
+        except Exception:
             raise RepositoryException(f'Error when adding entity {entity.model.name}')
         finally:
             cursor.close()

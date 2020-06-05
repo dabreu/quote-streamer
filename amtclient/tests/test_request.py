@@ -22,6 +22,7 @@ def config(tmpdir, monkeypatch, token_srv_url):
     mock_config['MT_CLIENT']['token_data_file'] = tmpdir + 'token.json'
     monkeypatch.setattr(configuration, 'configuration', mock_config)
 
+
 @pytest.fixture()
 def token_response():
     response = {
@@ -33,6 +34,7 @@ def token_response():
         "refresh_token_expires_in": 3600
     }
     return response
+
 
 @pytest.fixture()
 def token_request(token_srv_url, token_response, requests_mock):
@@ -49,7 +51,8 @@ def test_request_execute_get_calls_sender():
     request.sender = mock_request
     request.execute('get', 'http://test_url', 'sql_data', 'json', requires_auth=False)
     mock_request.get.assert_called_once_with('http://test_url', data='sql_data',
-                                             headers={'Content-type': 'application/json'}, params={})
+                                             headers={'Content-type': 'application/json'},
+                                             params={})
 
 
 def test_request_execute_post_calls_sender():
@@ -103,7 +106,9 @@ def test_request_execute_sets_auth_header_by_default():
                                                        "Authorization": "Bearer TOKEN_VALUE"})
 
 
-def test_token_retriever_state_after_initialization_when_token_file_not_exists(config, token_request, requests_mock):
+def test_token_retriever_state_after_initialization_when_token_file_not_exists(config,
+                                                                               token_request,
+                                                                               requests_mock):
     token_retriever = TokenRetriever()
     assert token_retriever.get_access_token() == "token_value"
     assert token_retriever.access_token == "token_value"
@@ -113,7 +118,8 @@ def test_token_retriever_state_after_initialization_when_token_file_not_exists(c
     assert requests_mock.call_count == 1
 
 
-def test_token_retriever_state_after_initialization_when_token_file_exists(tmpdir, config, token_request,
+def test_token_retriever_state_after_initialization_when_token_file_exists(tmpdir, config,
+                                                                           token_request,
                                                                            requests_mock):
     atime = time.time()
     file_data = {
@@ -138,7 +144,8 @@ def test_token_retriever_state_after_initialization_when_token_file_exists(tmpdi
     assert requests_mock.call_count == 0
 
 
-def test_token_retriever_returns_current_access_token_if_not_expired(config, token_request, requests_mock):
+def test_token_retriever_returns_current_access_token_if_not_expired(config, token_request,
+                                                                     requests_mock):
     token_retriever = TokenRetriever()
     assert token_retriever.get_access_token() == "token_value"
     assert requests_mock.call_count == 1
@@ -146,7 +153,8 @@ def test_token_retriever_returns_current_access_token_if_not_expired(config, tok
     assert requests_mock.call_count == 1
 
 
-def test_token_retriever_refreshes_token_when_access_token_is_expired(config, token_srv_url, token_response,
+def test_token_retriever_refreshes_token_when_access_token_is_expired(config, token_srv_url,
+                                                                      token_response,
                                                                       requests_mock):
     exp_response = {
         "access_token": "exp_token_value",
@@ -166,7 +174,8 @@ def test_token_retriever_refreshes_token_when_access_token_is_expired(config, to
     assert requests_mock.call_count == 2
 
 
-def test_token_retriever_throws_exception_when_both_tokens_are_expired(config, token_srv_url, requests_mock):
+def test_token_retriever_throws_exception_when_both_tokens_are_expired(config, token_srv_url,
+                                                                       requests_mock):
     auth_response = {
         "access_token": "token_value",
         "refresh_token": "refresh_token_value",

@@ -52,7 +52,7 @@ def test_entity_filter_model_fields_returns_only_fields_on_model():
     filtered_fields = entity.filter_model_fields()
     assert len(filtered_fields) == 2
     assert filtered_fields['symbol'] == "QQQ"
-    assert filtered_fields[ 'last_id'] == 1200
+    assert filtered_fields['last_id'] == 1200
 
 
 def test_entity_filter_model_fields_applies_mapping_before_filtering():
@@ -62,7 +62,5 @@ def test_entity_filter_model_fields_applies_mapping_before_filtering():
     filtered_fields = entity.filter_model_fields()
     assert len(filtered_fields) == 3
     assert filtered_fields['symbol'] == "QQQ"
-    assert filtered_fields[ 'last_id'] == 1200
-    assert filtered_fields[ 'ask_id'] == 1234
-
-
+    assert filtered_fields['last_id'] == 1200
+    assert filtered_fields['ask_id'] == 1234

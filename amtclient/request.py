@@ -25,7 +25,8 @@ class Request:
 
         if response.status_code != requests.codes.ok:
             raise RequestException(
-                f'Error executing request={url}, status_code={response.status_code}, error: {response.content}')
+                f'Error executing request={url}, status_code={response.status_code}, '
+                'error: {response.content}')
 
         return response.json()
 

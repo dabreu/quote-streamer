@@ -3,6 +3,7 @@ from adapter.database import connection_pool
 from model import Entity
 from repository import DBRepository
 
+
 def main():
     with DBRepository(connection_pool) as repo:
         for message in sys.stdin:

@@ -8,8 +8,9 @@ class Model(Enum):
 
 models = {
     Model.QUOTE: {
-        "fields": ['symbol', 'quote_timestamp', 'bid_price', 'ask_price', 'last_price', 'bid_size', 'ask_size',
-                   'ask_id', 'bid_id', 'total_volume', 'last_size', 'trade_time', 'quote_time', 'last_id', 'nav']
+        "fields": ['symbol', 'quote_timestamp', 'bid_price', 'ask_price', 'last_price',
+                   'bid_size', 'ask_size', 'ask_id', 'bid_id', 'total_volume', 'last_size',
+                   'trade_time', 'quote_time', 'last_id', 'nav']
     }
 }
 
@@ -27,12 +28,14 @@ class Entity:
 
     @classmethod
     def _from_mappings(cls, fields_values, field_mappings):
-        fields = {cls._from_mapping(field, field_mappings): value for field, value in fields_values.items()}
+        fields = {cls._from_mapping(field, field_mappings): value
+                  for field, value in fields_values.items()}
         return fields
 
     @classmethod
     def _from_mapping(cls, field, field_mappings):
-        if field_mappings is None: return field
+        if field_mappings is None:
+            return field
         return field_mappings[field] if field in field_mappings else field
 
     def _model_fields(self):
@@ -59,8 +62,8 @@ class Entity:
             return Entity(model, fields)
         except KeyError:
             raise EntityException(
-                f'Invalid json message to build the entity. The "{cls.MODEL_FIELD}" field must included and with a '
-                'valid type')
+                f'Invalid json message to build the entity. The "{cls.MODEL_FIELD}" field '
+                f'must included and with a valid type')
 
     def __getitem__(self, field):
         return self.fields_values[field]

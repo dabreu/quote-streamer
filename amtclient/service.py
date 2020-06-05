@@ -90,11 +90,11 @@ class ServiceClient(abc.ABC):
 
     @abc.abstractmethod
     def _create_entity(self, element):
-        raise NotImplemented
+        raise NotImplementedError
 
     @abc.abstractmethod
     def _handle_entity(self, entity):
-        raise NotImplemented
+        raise NotImplementedError
 
 
 @register_client
