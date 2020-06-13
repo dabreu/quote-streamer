@@ -37,9 +37,8 @@ class StreamerClient:
         }
         return json.dumps(request)
 
-    @classmethod
-    async def _login(cls, websocket):
-        login_request = cls._get_login_request()
+    async def _login(self, websocket):
+        login_request = self._get_login_request()
         await websocket.send(login_request)
         await websocket.recv()
 
